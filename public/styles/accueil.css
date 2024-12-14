@@ -225,3 +225,20 @@ main p {
     align-items: stretch;
     /* Étendre toutes les cartes à la même hauteur */
 }
+
+
+/* Effet de transition et transformation */
+
+.card-hover {
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+}
+
+
+/* Animation au survol */
+
+.card-hover:hover {
+    transform: scale(1.05);
+    /* Augmente légèrement la taille de la carte */
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+    /* Accentue l'ombre */
+}

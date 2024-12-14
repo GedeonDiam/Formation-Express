@@ -47,7 +47,7 @@
             <div class="row">
 
                 <div class="col-4">
-                    <div class="card" style="width: 18rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); ">
+                    <div class="card card-hover" style="width: 18rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); ">
                         <img src="./src/asset/images/professeur.jpg"class="card-img-top" alt="...">
                         <div class="card-body">
                         <h1 style="color:#732BF5;">200+ Enseignants</h1>
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="col-4">
-                    <div class="card" style="width: 18rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                    <div class="card card-hover" style="width: 18rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
                         <img src="./src/asset/images/student.jpg"class="card-img-top" alt="...">
                         <div class="card-body">
                         <h1 style="color:#732BF5;">15 ans + </h1>
@@ -67,14 +67,15 @@
                 </div>
 
                 <div class="col-4">
-                    <div class="card" style="width: 18rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-                        <img src="./src/asset/images/eleve.jpg"class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h1 style="color:#732BF5;">Assistance 7j/7</h1>
-                            <p class="card-text">Des conseillers pédagogiques compétants, efficaces et agréables pour répondre à vos questions.</p>
-                        </div>
-                    </div>
-                </div>
+    <div class="card card-hover" style="width: 18rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+        <img src="./src/asset/images/eleve.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h1 style="color:#732BF5;">Assistance 7j/7</h1>
+            <p class="card-text">Des conseillers pédagogiques compétants, efficaces et agréables pour répondre à vos questions.</p>
+        </div>
+    </div>
+</div>
+
             </div> <br><br>
         </div>
 
