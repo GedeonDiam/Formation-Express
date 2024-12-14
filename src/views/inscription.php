@@ -68,6 +68,6 @@
                 <img src="./src/asset/images/inscription.png" class="" width="850">
             </div>
         </div>
-    </div>
+    </div> <br><br>
 </div>
 

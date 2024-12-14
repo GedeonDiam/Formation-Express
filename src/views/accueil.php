@@ -17,16 +17,16 @@
                 <div class="stats">
                     <div class="stat">
                         <h3 style="color: #FFDC1D;">1000+</h3>
-                        <p>Courses to choose from</p>
+                        <p>Cours parmi lesquels choisir</p>
                     </div>
                     
                     <div class="stat">
                         <h3 style="color: #007bff;">5000+</h3>
-                        <p>Students Trained</p>
+                        <p>Étudiants formés</p>
                     </div>
                     <div class="stat">
                         <h3 style="color: #F08650;">200+</h3>
-                        <p>Professional Trainers</p>
+                        <p>Formateurs professionnels</p>
                     </div>
                 </div>
             </div>
@@ -37,31 +37,45 @@
         <div class="col-6 ">
             <img src="./src/asset/images/accueil.png" alt="">
         </div>
-    </div>
+    </div> <br><br>
 
     <div class="container">
         <div class="container">
             <div>
-                <h1>Une équipe pédagogique expérimentée & fiable</h1>
-            </div>
+                <h1 style="text-align: center;">Une équipe pédagogique <span style="color: #732BF5;">Expérimentée</span> & <span style="color: #732BF5 ;">Fiable</span> </h1>
+            </div><br><br>
             <div class="row">
+
                 <div class="col-4">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card" style="width: 18rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
                         <img src="./src/asset/images/professeur.jpg"class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <h1 style="color:#732BF5;">200+ Enseignants</h1>
+                            <p class="card-text">de l'Education nationale qui conçoivent et rédigent les parcours pédagogiques.</p>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-4">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card" style="width: 18rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
                         <img src="./src/asset/images/student.jpg"class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <h1 style="color:#732BF5;">15 ans + </h1>
+                            <p class="card-text">d'expertise dans la réussite scolaire auprès d'enfants de tous niveaux.</p>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="col-4">
+                    <div class="card" style="width: 18rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                        <img src="./src/asset/images/eleve.jpg"class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h1 style="color:#732BF5;">Assistance 7j/7</h1>
+                            <p class="card-text">Des conseillers pédagogiques compétants, efficaces et agréables pour répondre à vos questions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div> <br><br>
         </div>
 
         

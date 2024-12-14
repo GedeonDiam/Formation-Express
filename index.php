@@ -53,6 +53,9 @@ switch ($page) {
 }
 
 ?>
+<div>
+        <?php include ("./src/includes/footer.php"); ?>
+    </div>
 </head>
 </body>
 </html>

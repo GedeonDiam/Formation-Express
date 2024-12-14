@@ -153,3 +153,34 @@
         .formulaire {
             margin-top: 50px;
         }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links div {
+            flex: 1;
+            min-width: 150px;
+            margin-right: 20px;
+        }
+        
+        .top-footer .logos img {
+            height: 50px;
+        }
+        
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
