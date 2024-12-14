@@ -47,7 +47,7 @@
             <div class="row">
 
                 <div class="col-4">
-                    <div class="card" style="width: 18rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                    <div class="card" style="width: 18rem;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); ">
                         <img src="./src/asset/images/professeur.jpg"class="card-img-top" alt="...">
                         <div class="card-body">
                         <h1 style="color:#732BF5;">200+ Enseignants</h1>
