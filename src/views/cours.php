@@ -18,8 +18,14 @@
     <h1>Toutes les compétences dont vous avez besoin au même endroit !</h1>
     <p>Des compétences essentielles aux sujets techniques, BoostSkills contribue à votre dévéloppement professionnel.</p><br><br>
 
+  
+  <form class="d-flex mt-3 w-25" role="search"  >
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form><br><br>
+
     <div class="row">
-       
+
         <div class="col-3 d-flex">
             <div class="card flex-fill card-hover" styl>
                 <img src="./src/asset/images/coder.jpg" class="card-img-top" alt="Coder">
@@ -30,7 +36,7 @@
             </div>
         </div>
 
-        
+
         <div class="col-3 d-flex">
             <div class="card flex-fill card-hover">
                 <img src="./src/asset/images/web-design.jpg" class="card-img-top" alt="Web Design">
@@ -41,7 +47,7 @@
             </div>
         </div>
 
-        
+
         <div class="col-3 d-flex">
             <div class="card flex-fill card-hover">
                 <img src="./src/asset/images/full-stack.jpg" class="card-img-top" alt="Full Stack">
@@ -52,7 +58,7 @@
             </div>
         </div>
 
-       
+
         <div class="col-3 d-flex">
             <div class="card flex-fill card-hover">
                 <img src="./src/asset/images/pratique.jpg" class="card-img-top" alt="Pratique">
@@ -67,7 +73,7 @@
     <br><br>
 
     <div class="row">
-        
+
         <div class="col-3 d-flex">
             <div class="card flex-fill card-hover">
                 <img src="./src/asset/images/java1.jpg" class="card-img-top" alt="Coder">
@@ -98,7 +104,7 @@
             </div>
         </div>
 
-        
+
         <div class="col-3 d-flex">
             <div class="card flex-fill card-hover">
                 <img src="./src/asset/images/java4.png" class="card-img-top" alt="Base de données">
