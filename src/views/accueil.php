@@ -9,8 +9,7 @@
                     <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Apprenez une <span>Nouvelle Compétence</span> Chaque jour, à tout moment, et Partout.</h1>
                     <p>Plus de 1000 cours couvrant tous les domaines technologiques pour vous permettre d'apprendre et d'explorer de nouvelles opportunités. Apprenez auprès d'experts du secteur et décrochez l'emploi de vos rêves.</p>
                     <div class="buttons">
-                        <a href="#" class="start-trial">Start Trial</a>
-                        <a href="#" class="how-it-works">How it Works</a>
+                        <a href="index.php?page=cours" class="start-trial">Commencer</a>
                     </div>
                 </div>
 

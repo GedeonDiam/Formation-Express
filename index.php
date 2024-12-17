@@ -37,10 +37,6 @@ switch ($page) {
 
         case 'categorie':
         include('./src/views/categories.php');
-        break;
-
-        case 'a-propos':
-        include('./src/views/a-propos.php');
         break; 
 
         case 'connexion':

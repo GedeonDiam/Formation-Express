@@ -6,7 +6,6 @@
             <a href="index.php?page=accueil">Accueil</a>
             <a href="index.php?page=cours">Cours</a>
             <a href="index.php?page=categorie">Catégories</a>
-            <a href="index.php?page=a-propos">A propos</a>
         </nav>
         <div class="">
          
