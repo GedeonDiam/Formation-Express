@@ -1,3 +1,6 @@
+
+
+
 <header>
         <div class="logo">
            <a href="index.php?page=accueil" style="text-decoration:none"> BoostSkills</a>

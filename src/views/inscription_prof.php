@@ -1,3 +1,5 @@
+<!-- inscription_prof.php -->
+
 <?php
     if (isset($_POST['boutton'])){
         include ('./src/models/modele.class.php');
@@ -10,11 +12,9 @@
         $mdp = $_POST['mdp'];   
       
 
-        //lancement de la requette
-        $requete = $this->pdo->prepare("INSERT INTO enseignant(nom, telephone, email, diplome, domaine, mdp, ) VALUES($nom,$telephone,$email,$diplome,$domaine,$mdp)");
-
     }
 ?>
+
 
 
 
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-5">
                 <div class="formulaire">
-                    <form action="" method="POST">
+                    <form action="index.php?page=gestion_inscription.php" method="POST">
                         <div class="centre text-center">
                             <h1>Inscription des Enseignants </h1>
                             <hr>
@@ -43,22 +43,7 @@
                             <div class="mb-3">
                                 <label for="mail" style="display: block; width:80%; font-weight: bold;" class="form-label">Téléphone</label>
                                 <div>
-                                    <input type="email" class="form-control" id="telephone" name="telephone" required>
-                                </div>
-                            </div>
-
-
-                            <div class="mb-3">
-                                <label for="mail" style="display: block; width:80%; font-weight: bold;" class="form-label">Diplôme ou qualification</label>
-                                <div>
-                                    <input type="email" class="form-control" id="diplome" name="email" required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="mail" style="display: block; width:80%; font-weight: bold;" class="form-label">Domaine d'expertise</label>
-                                <div>
-                                    <input type="email" class="form-control" id="domaine" name="email" required>
+                                    <input type="text" class="form-control" id="telephone" name="telephone" required>
                                 </div>
                             </div>
 
@@ -68,6 +53,21 @@
                                     <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="mail" style="display: block; width:80%; font-weight: bold;" class="form-label">Diplôme ou qualification</label>
+                                <div>
+                                    <input type="text" class="form-control" id="diplome" name="diplome" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="mail" style="display: block; width:80%; font-weight: bold;" class="form-label">Domaine d'expertise</label>
+                                <div>
+                                    <input type="text" class="form-control" id="domaine" name="domaine" required>
+                                </div>
+                            </div>
+                           
                             <div class="mb-3">
                                 <label for="motif" style="display: block; width:80%; font-weight: bold;" class="form-label">Mot de passe</label>
                                 <div>
@@ -77,7 +77,7 @@
 
                            
 
-                            <button type="submit" class="btn mt-3" style="width:80%; background-color:#732BF5 !important; color: white; font-weight: bold;">Inscription</button>
+                            <button type="submit" class="btn mt-3" style="width:100%; background-color:#732BF5 !important; color: white; font-weight: bold;">Inscription</button>
                         </div>
 
                     </form>
