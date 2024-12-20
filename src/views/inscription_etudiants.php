@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-5">
                 <div class="formulaire">
-                    <form action="" method="POST">
+                    <form action="index.php?page=gestion_inscription_etudiants" method="POST">
                         <div class="centre text-center">
                             <h1>Inscription des Etudiants</h1>
                             <hr>
@@ -20,7 +20,7 @@
                             <div class="mb-3">
                                 <label for="mail" style="display: block; font-weight: bold;" class="form-label">Téléphone</label>
                                 <div>
-                                    <input type="email" class="form-control" id="telephone" name="telephone" required>
+                                    <input type="text" class="form-control" id="telephone" name="telephone" required>
                                 </div>
                             </div>
 
@@ -34,7 +34,7 @@
                             <div class="mb-3">
                                 <label for="mail" style="display: block; font-weight: bold;" class="form-label">Spécialité ou filière</label>
                                 <div>
-                                    <input type="email" class="form-control" id="specialite" name="specialite" required>
+                                    <input type="text" class="form-control" id="specialite" name="specialite" required>
                                 </div>
                             </div>
 
@@ -43,16 +43,7 @@
                                 <div>
                                     <input type="text" class="form-control" id="mdp" name="mdp" required>
                                 </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="motif" style="display: block; font-weight: bold;" class="form-label">Confirmer le mot de passe</label>
-                                <div>
-                                    <input type="text" class="form-control" id="motif" name="motif" required>
-                                </div>
-                            </div>
-
-                           
+                            </div>                           
 
                             <button type="submit" class="btn mt-3" style="width:100%; background-color:#732BF5 !important; color: white; font-weight: bold;">Inscription</button>
                         </div>

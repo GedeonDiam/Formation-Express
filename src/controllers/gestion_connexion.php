@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Récupération de l'utilisateur par email
         $enseignant = $controller->getEnseignantByEmail($email);
+        $etudiant = $controller->getEtudiantsByEmail($email);
 
         if ($enseignant && password_verify($mdp, $enseignant['mdp'])) {
             // Connexion réussie
@@ -25,6 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } catch (Exception $e) {
         echo '<div class="alert alert-danger">Erreur : ' . $e->getMessage() . '</div>';
+    }
+
+    if ($etudiant && password_verify($mdp, $etudiant['mdp'])) {
+        // Connexion réussie
+        session_start();
+        $_SESSION['etudiant'] = $etudiant['id'];
+        header('Location: index.php?page=accueil');
+        exit();
+    } else {
+        echo '<div class="alert alert-danger">Email ou mot de passe incorrect.</div>';
     }
 }
 ?>

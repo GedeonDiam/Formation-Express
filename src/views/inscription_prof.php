@@ -24,7 +24,13 @@
         <div class="row">
             <div class="col-5">
                 <div class="formulaire">
-                    <form action="index.php?page=gestion_inscription.php" method="POST">
+                    <form action="index.php?page=gestion_inscription" method="POST">
+                        <?php
+                        if(isset($_SESSION['message'])) {
+                            echo '<div class="alert alert-info">'.$_SESSION['message'].'</div>';
+                            unset($_SESSION['message']);
+                        }
+                        ?>
                         <div class="centre text-center">
                             <h1>Inscription des Enseignants </h1>
                             <hr>
@@ -77,7 +83,7 @@
 
                            
 
-                            <button type="submit" class="btn mt-3" style="width:100%; background-color:#732BF5 !important; color: white; font-weight: bold;">Inscription</button>
+                            <button type="submit" name="boutton" class="btn mt-3" style="width:100%; background-color:#732BF5 !important; color: white; font-weight: bold;">Inscription</button>
                         </div>
 
                     </form>

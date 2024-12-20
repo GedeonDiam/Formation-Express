@@ -20,7 +20,7 @@
     <li><a class="dropdown-item" href="index.php?page=connexion">Connexion</a></li>
     <li><hr class="dropdown-divider"></li>
     <li class="ms-3"><i><b>Etudiants</b></i></li>
-    <li><a class="dropdown-item" href="index.php?page=inscription">Démarrer mon inscription</a></li>
+    <li><a class="dropdown-item" href="index.php?page=inscription_etudiants">Démarrer mon inscription</a></li>
     <li><hr class="dropdown-divider"></li>
     <li class="ms-3"><i><b>Professeurs</b></i></li>
     <li><a class="dropdown-item" href="index.php?page=inscription_prof">Démarrer mon inscription</a></li>

@@ -5,11 +5,11 @@ USE BTS_Express;
 -- Table des étudiants
 CREATE TABLE etudiants (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
+    nom VARCHAR(100) NOT NULL,
     telephone VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     specialite VARCHAR(100) NOT NULL,
-    password VARCHAR(255) NOT NULL
+    mdp VARCHAR(255) NOT NULL
 );
 
 -- Table des enseignants
@@ -18,9 +18,9 @@ CREATE TABLE enseignants (
     nom VARCHAR(100) NOT NULL,
     telephone VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
     diplome VARCHAR(100) NOT NULL,
-    domaine VARCHAR(100) NOT NULL
+    domaine VARCHAR(100) NOT NULL,
+     mdp VARCHAR(255) NOT NULL
 );
 
 -- Table des cours

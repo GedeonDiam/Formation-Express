@@ -15,16 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = htmlspecialchars($_POST['nom'] ?? '');
     $telephone = htmlspecialchars($_POST['telephone'] ?? '');
     $email = htmlspecialchars($_POST['email'] ?? '');
-    $diplome = htmlspecialchars($_POST['diplome'] ?? '');
-    $domaine = htmlspecialchars($_POST['domaine'] ?? '');
+    $specialite = htmlspecialchars($_POST['specialite'] ?? '');
     $mdp = htmlspecialchars($_POST['mdp'] ?? '');
 
     // Vérifie que tous les champs sont remplis
-    if (!empty($nom) && !empty($telephone) && !empty($email) && !empty($diplome) && !empty($domaine) && !empty($mdp)) {
+    if (!empty($nom) && !empty($telephone) && !empty($email) && !empty($specialite) && !empty($mdp)) {
         // Vérifier si l'email existe déjà
-        if($controller->getEnseignantByEmail($email)) {
+        if($controller->getEtudiantsByEmail($email)) {
             $_SESSION['message'] = "Cette adresse email est déjà utilisée.";
-            header('Location: index.php?page=inscription_prof');
+            header('Location: index.php?page=inscription_etudiants');
             exit();
         }
 
@@ -36,14 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'nom' => $nom,
             'telephone' => $telephone,
             'email' => $email,
-            'diplome' => $diplome,
-            'domaine' => $domaine,
+            'specialite' => $specialite,
             'mdp' => $hashedPassword
         ];
 
         try {
             // Tente d'inscrire l'utilisateur via le contrôleur
-            $controller->inscriptionEnseignants($tab);
+            $controller->inscriptionEtudiants($tab);
 
             // Si l'inscription est réussie, message de succès et redirection
             $_SESSION['message'] = "Inscription réussie ! Veuillez vous connecter.";
@@ -52,19 +50,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (Exception $e) {
             // En cas d'erreur, message d'erreur et redirection
             $_SESSION['message'] = "Erreur lors de l'inscription : " . $e->getMessage();
-            header('Location: index.php?page=inscription_prof');
+            header('Location: index.php?page=inscription_etudiants');
             exit();
         }
     } else {
         // Si les champs sont vides, message d'erreur
         $_SESSION['message'] = "Veuillez remplir tous les champs.";
-        header('Location: index.php?page=inscription_prof');
+        header('Location: index.php?page=inscription_etudiants');
         exit();
     }
 } else {
     // Si aucun formulaire n'a été soumis, message d'erreur
     $_SESSION['message'] = "Aucune donnée soumise.";
-    header('Location: index.php?page=inscription_prof');
+    header('Location: index.php?page=inscription_etudiants');
     exit();
 }
 ?>
