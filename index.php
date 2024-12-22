@@ -58,6 +58,10 @@ $unController = new Controller($serveur, $bdd, $user, $mdp);
                 include('./src/controllers/gestion_inscription_etudiants.php');
                 break;
 
+                case 'dashboard':
+                    include('./src/views/dashboard.php');
+                    break;
+
             default:
                 include('./src/views/accueil.php');
                 break;

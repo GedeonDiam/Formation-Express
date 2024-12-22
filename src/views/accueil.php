@@ -1,3 +1,28 @@
+<?php
+// Démarre la session si ce n'est pas déjà fait
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+
+// Vérifie si l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
+    header('Location: index.php?page=connexion');
+    exit();
+}
+?>
+<div class="accueil">
+    <?php if(isset($_SESSION['message'])): ?>
+        <div class="alert alert-success" role="alert">
+            <?php 
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+            ?>
+        </div>
+    <?php endif; ?>
+    <h1>Bienvenue, <?php echo isset($_SESSION['user']['nom']) ? $_SESSION['user']['nom'] : 'Utilisateur'; ?>!</h1>
+    <a href="index.php?page=deconnexion" class="btn btn-danger">Déconnexion</a>
+</div>
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-6 mt-5 ">

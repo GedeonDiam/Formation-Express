@@ -1,9 +1,15 @@
+<?php
+// Démarre la session si ce n'est pas déjà fait
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+?>
 <div class="formulaire">
     <div class="container">
         <div class="row">
 
             <div class="col-6" style="padding-top:70px">
-                <img src="./src/asset/images/connexion.png" class="" width="600">
+                <img src="./src/asset/images/connexion.png" class="" width="600" alt="Connexion">
             </div>
 
             <div class="col-6 mt-5">
@@ -12,28 +18,39 @@
                     <div class="centre text-center">
                         <h1>Connexion</h1>
                         <p>Connectez-vous pour accéder à votre compte</p>
-                    </div><hr>
+                    </div>
+                    <hr>
 
-                    <form action="" method="POST">
+                    <!-- Affichage des messages de session -->
+                    <?php if(isset($_SESSION['message'])): ?>
+                        <div class="alert alert-success" role="alert">
+                            <?php 
+                                echo $_SESSION['message'];
+                                unset($_SESSION['message']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form action="src/controllers/gestion_connexion.php" method="POST"  autocomplete="off">
 
                         <div class="mb-3">
-                            <label for="mail"style="display: block; font-weight: bold;" class="form-label">Adresse E-mail</label>
+                            <label for="email" style="display: block; font-weight: bold;" class="form-label">Adresse E-mail</label>
                             <div>
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="motif" style="display: block; font-weight: bold;" class="form-label">Mot de passe</label>
+                            <label for="mdp" style="display: block; font-weight: bold;" class="form-label">Mot de passe</label>
                             <div>
-                                <input type="text" class="form-control" id="mdp" name="mdp" required>
+                                <input type="password" class="form-control" id="mdp" name="mdp" required>
                             </div>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault" >
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                             <label class="form-check-label" for="flexCheckDefault">
-                               <p style=" font-weight: bold;">Se souvenir de moi</p> 
+                               <strong>Se souvenir de moi</strong>
                             </label>
                         </div>
 
@@ -41,7 +58,7 @@
 
                     </form>
 
-                    <p><a href="">Mot de passe oublié?</a></p>
+                    <p><a href="#">Mot de passe oublié?</a></p>
                 </div>
 
             </div>

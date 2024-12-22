@@ -77,5 +77,20 @@ class Modele {
         $exec->execute();
         return $exec->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function deconnexion() {
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        // Détruire toutes les variables de session
+        $_SESSION = array();
+        
+        // Détruire la session
+        session_destroy();
+        
+        // Rediriger vers la page de connexion
+        header('Location: index.php?page=connexion');
+        exit();
+    }
 }
 ?>

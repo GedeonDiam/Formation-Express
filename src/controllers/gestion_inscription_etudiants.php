@@ -18,28 +18,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $specialite = htmlspecialchars($_POST['specialite'] ?? '');
     $mdp = htmlspecialchars($_POST['mdp'] ?? '');
 
-    // Vérifie que tous les champs sont remplis
-    if (!empty($nom) && !empty($telephone) && !empty($email) && !empty($specialite) && !empty($mdp)) {
-        // Vérifier si l'email existe déjà
-        if($controller->getEtudiantsByEmail($email)) {
-            $_SESSION['message'] = "Cette adresse email est déjà utilisée.";
-            header('Location: index.php?page=inscription_etudiants');
-            exit();
-        }
+    $erreurs = [];
 
-        // Hachage du mot de passe pour la sécurité
-        $hashedPassword = password_hash($mdp, PASSWORD_BCRYPT);
+    // Validation des champs
+    if (empty($nom)) $erreurs[] = "Le nom est requis.";
+    if (empty($telephone)) $erreurs[] = "Le téléphone est requis.";
+    if (empty($email)) $erreurs[] = "L'email est requis.";
+    if (empty($specialite)) $erreurs[] = "La spécialité est requise.";
+    if (empty($mdp)) $erreurs[] = "Le mot de passe est requis.";
 
-        // Prépare les données pour l'insertion
-        $tab = [
-            'nom' => $nom,
-            'telephone' => $telephone,
-            'email' => $email,
-            'specialite' => $specialite,
-            'mdp' => $hashedPassword
-        ];
-
+    if (empty($erreurs)) {
         try {
+            // Vérifier si l'email existe déjà
+            if($controller->getEtudiantsByEmail($email)) {
+                $_SESSION['message'] = "Cette adresse email est déjà utilisée.";
+                header('Location: index.php?page=inscription_etudiants');
+                exit();
+            }
+
+            // Hachage du mot de passe pour la sécurité
+            $hashedPassword = password_hash($mdp, PASSWORD_BCRYPT);
+
+            // Prépare les données pour l'insertion
+            $tab = [
+                'nom' => $nom,
+                'telephone' => $telephone,
+                'email' => $email,
+                'specialite' => $specialite,
+                'mdp' => $hashedPassword
+            ];
+
             // Tente d'inscrire l'utilisateur via le contrôleur
             $controller->inscriptionEtudiants($tab);
 
@@ -54,13 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
     } else {
-        // Si les champs sont vides, message d'erreur
-        $_SESSION['message'] = "Veuillez remplir tous les champs.";
+        // Si des erreurs de validation existent, les afficher
+        $_SESSION['message'] = implode('<br>', $erreurs);
         header('Location: index.php?page=inscription_etudiants');
         exit();
     }
 } else {
-    // Si aucun formulaire n'a été soumis, message d'erreur
+    // Si aucun formulaire n'a été soumis, rediriger avec un message
     $_SESSION['message'] = "Aucune donnée soumise.";
     header('Location: index.php?page=inscription_etudiants');
     exit();

@@ -24,6 +24,10 @@ class Controller {
     
     public function getEtudiantsByEmail($email) {
         return $this->unModele->getEtudiantsByEmail($email);
+    } 
+
+    public function deconnexion() {
+        $this->unModele->deconnexion();
     }
 }
 ?>
