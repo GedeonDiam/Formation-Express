@@ -20,8 +20,8 @@ class Modele {
         // Hash the password
         $tab['mdp'] = password_hash($tab['mdp'], PASSWORD_DEFAULT);
 
-        $requete = "INSERT INTO enseignants (nom, telephone, email, mdp, diplome, domaine) 
-                    VALUES (:nom, :telephone, :email, :mdp, :diplome, :domaine)";
+        $requete = "INSERT INTO enseignants (nom, telephone, email, mdp, role, diplome, domaine) 
+                    VALUES (:nom, :telephone, :email, :mdp, :role, :diplome, :domaine)";
         
         $exec = $this->unPdo->prepare($requete);
         $exec->execute([
@@ -29,6 +29,7 @@ class Modele {
             ':telephone' => $tab['telephone'],
             ':email' => $tab['email'],
             ':mdp' => $tab['mdp'],
+            ':role' => $tab['role'],
             ':diplome' => $tab['diplome'],
             ':domaine' => $tab['domaine']
         ]);
@@ -45,14 +46,15 @@ class Modele {
         // Hash the password
         $tab['mdp'] = password_hash($tab['mdp'], PASSWORD_DEFAULT);
 
-        $requete = "INSERT INTO etudiants (nom, telephone, email, specialite, mdp) 
-                    VALUES (:nom, :telephone, :email, :specialite, :mdp)";
+        $requete = "INSERT INTO etudiants (nom, telephone, email, role, specialite, mdp) 
+                    VALUES (:nom, :telephone, :email, :role, :specialite, :mdp)";
         
         $exec = $this->unPdo->prepare($requete);
         $exec->execute([
             ':nom' => $tab['nom'],
             ':telephone' => $tab['telephone'],
             ':email' => $tab['email'],
+            ':role' => $tab['role'],
             ':specialite' => $tab['specialite'],
             ':mdp' => $tab['mdp']
         ]);
@@ -79,18 +81,26 @@ class Modele {
     }
 
     public function deconnexion() {
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
-        // Détruire toutes les variables de session
-        $_SESSION = array();
-        
         // Détruire la session
         session_destroy();
         
-        // Rediriger vers la page de connexion
-        header('Location: index.php?page=connexion');
+        // Rediriger vers la page d'accueil
+        header('Location: /Formation-Express/index.php?page=accueil');
         exit();
+    }
+
+    public function createCours($data) {
+        $sql = "INSERT INTO cours (titre, description, id_enseignant, categorie) 
+                VALUES (:titre, :description, :id_enseignant, :categorie)";
+        $stmt = $this->unPdo->prepare($sql);
+        return $stmt->execute($data);
+    }
+    
+    public function getCoursByEnseignant($id_enseignant) {
+        $sql = "SELECT * FROM cours WHERE id_enseignant = :id_enseignant";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute(['id_enseignant' => $id_enseignant]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>

@@ -1,6 +1,4 @@
 <?php
-// Démarre la session pour pouvoir gérer les messages et la connexion
-session_start();
 
 // Inclure la configuration de la base de données et le contrôleur
 require_once('./src/config/db.php');
@@ -38,9 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             }
 
-            // Hachage du mot de passe pour la sécurité
-            $hashedPassword = password_hash($mdp, PASSWORD_BCRYPT);
-
+ 
             // Prépare les données pour l'insertion
             $tab = [
                 'nom' => $nom,
@@ -48,16 +44,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'email' => $email,
                 'diplome' => $diplome,
                 'domaine' => $domaine,
-                'mdp' => $hashedPassword
+                "role" => "enseignant",
+                
+                'mdp' => $mdp
             ];
 
             // Tente d'inscrire l'utilisateur via le contrôleur
             $controller->inscriptionEnseignants($tab);
-
-            // Si l'inscription est réussie, message de succès et redirection
-            $_SESSION['message'] = "Inscription réussie ! Veuillez vous connecter.";
-            header('Location: index.php?page=connexion');
-            exit();
+            
+            try {
+                $enseignant = $controller->getEnseignantByEmail($email);
+                $etudiant = $controller->getEtudiantsByEmail($email);
+                
+                if ($enseignant && password_verify($mdp, $enseignant['mdp'])) {
+                    $_SESSION['user'] = $enseignant;
+                    $_SESSION['role'] = 'enseignant';
+                    $_SESSION['message'] = 'Bienvenue ' . $enseignant['nom'] . '!';
+                    header('Location: index.php?page=dashboard');
+                    exit();
+                }
+            } catch (Exception $e) {
+                $_SESSION['message'] = 'Erreur : ' . $e->getMessage();
+                header('Location: index.php?page=connexion');
+                exit();
+            }
+    
         } catch (Exception $e) {
             // En cas d'erreur, message d'erreur et redirection
             $_SESSION['message'] = "Erreur lors de l'inscription : " . $e->getMessage();

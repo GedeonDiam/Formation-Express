@@ -1,6 +1,8 @@
 <?php
-// Démarre la session pour pouvoir gérer les messages et la connexion
-session_start();
+// Démarre la session si ce n'est pas déjà fait
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
 ?>
 <div class="">
     <div class="container">

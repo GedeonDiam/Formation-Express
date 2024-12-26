@@ -31,7 +31,7 @@ if(session_status() == PHP_SESSION_NONE){
                         </div>
                     <?php endif; ?>
 
-                    <form action="src/controllers/gestion_connexion.php" method="POST"  autocomplete="off">
+                    <form action="index.php?page=gestion_connexion" method="POST"  autocomplete="off">
 
                         <div class="mb-3">
                             <label for="email" style="display: block; font-weight: bold;" class="form-label">Adresse E-mail</label>
@@ -55,9 +55,8 @@ if(session_status() == PHP_SESSION_NONE){
                         </div>
 
                         <button type="submit" class="btn mt-3" style="width:100%; background-color:#732BF5 !important; color: white; font-weight: bold;">Connexion</button>
-
+                        
                     </form>
-
                     <p><a href="#">Mot de passe oublié?</a></p>
                 </div>
 

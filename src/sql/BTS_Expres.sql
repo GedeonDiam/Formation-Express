@@ -8,6 +8,7 @@ CREATE TABLE etudiants (
     nom VARCHAR(100) NOT NULL,
     telephone VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
+    role VARCHAR(100) NOT NULL,
     specialite VARCHAR(100) NOT NULL,
     mdp VARCHAR(255) NOT NULL
 );
@@ -18,22 +19,30 @@ CREATE TABLE enseignants (
     nom VARCHAR(100) NOT NULL,
     telephone VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
+    role VARCHAR(100) NOT NULL,
     diplome VARCHAR(100) NOT NULL,
     domaine VARCHAR(100) NOT NULL,
      mdp VARCHAR(255) NOT NULL
 );
 
 -- Table des cours
-CREATE TABLE courses (
+CREATE TABLE cours (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(100) NOT NULL,
-    description TEXT NOT NULL,
-    file_url VARCHAR(255) NOT NULL,
-    category VARCHAR(100) NOT NULL,
-    created_by_teacher INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (created_by_teacher) REFERENCES enseignants(id) ON DELETE SET NULL
+    titre VARCHAR(255) NOT NULL,
+    description TEXT,
+    id_enseignant INT,
+    categorie VARCHAR(100),
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_enseignant) REFERENCES enseignants(id)
+);
+
+CREATE TABLE inscriptions_cours (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_etudiant INT,
+    id_cours INT,
+    date_inscription DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_etudiant) REFERENCES etudiants(id),
+    FOREIGN KEY (id_cours) REFERENCES cours(id)
 );
 
 -- Table des quiz

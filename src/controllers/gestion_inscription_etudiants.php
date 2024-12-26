@@ -1,10 +1,12 @@
 <?php
 // Démarre la session pour pouvoir gérer les messages et la connexion
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Inclure la configuration de la base de données et le contrôleur
-require_once('./src/config/db.php');
-require_once('./src/controllers/controllers.class.php');
+require_once(__DIR__ . '/../config/db.php');
+require_once(__DIR__ . '/../controllers/controllers.class.php');
 
 // Créer une instance du contrôleur
 $controller = new Controller($serveur, $bdd, $user, $mdp);
@@ -30,14 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($erreurs)) {
         try {
             // Vérifier si l'email existe déjà
-            if($controller->getEtudiantsByEmail($email)) {
+            if ($controller->getEtudiantsByEmail($email)) {
                 $_SESSION['message'] = "Cette adresse email est déjà utilisée.";
-                header('Location: index.php?page=inscription_etudiants');
+                header('Location: /Formation-Express/index.php?page=inscription_etudiants');
                 exit();
             }
-
-            // Hachage du mot de passe pour la sécurité
-            $hashedPassword = password_hash($mdp, PASSWORD_BCRYPT);
 
             // Prépare les données pour l'insertion
             $tab = [
@@ -45,32 +44,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'telephone' => $telephone,
                 'email' => $email,
                 'specialite' => $specialite,
-                'mdp' => $hashedPassword
+                'role' => 'etudiant',
+                'mdp' => $mdp
             ];
 
             // Tente d'inscrire l'utilisateur via le contrôleur
             $controller->inscriptionEtudiants($tab);
+            try {
+                
 
-            // Si l'inscription est réussie, message de succès et redirection
-            $_SESSION['message'] = "Inscription réussie ! Veuillez vous connecter.";
-            header('Location: index.php?page=connexion');
-            exit();
+                $enseignant = $controller->getEnseignantByEmail($email);
+                $etudiant = $controller->getEtudiantsByEmail($email);
+
+
+        if ($etudiant && password_verify($mdp, $etudiant['mdp'])) {
+                    $_SESSION['user'] = $etudiant;
+                    $_SESSION['role'] = 'etudiant';
+                    header('Location: index.php?page=accueil');
+
+                    exit();
+                } else {
+                    $_SESSION['message'] = $verif;
+                    header('Location: index.php?page=connexion');
+                    exit();
+                }
+            } catch (Exception $e) {
+                $_SESSION['message'] = 'Erreur : ' . $e->getMessage();
+                header('Location: index.php?page=connexion');
+                exit();
+            }
         } catch (Exception $e) {
             // En cas d'erreur, message d'erreur et redirection
             $_SESSION['message'] = "Erreur lors de l'inscription : " . $e->getMessage();
-            header('Location: index.php?page=inscription_etudiants');
+            header('Location: /Formation-Express/index.php?page=inscription_etudiants');
             exit();
         }
     } else {
         // Si des erreurs de validation existent, les afficher
         $_SESSION['message'] = implode('<br>', $erreurs);
-        header('Location: index.php?page=inscription_etudiants');
+        header('Location: /Formation-Express/index.php?page=inscription_etudiants');
         exit();
     }
 } else {
     // Si aucun formulaire n'a été soumis, rediriger avec un message
     $_SESSION['message'] = "Aucune donnée soumise.";
-    header('Location: index.php?page=inscription_etudiants');
+    header('Location: /Formation-Express/index.php?page=inscription_etudiants');
     exit();
 }
-?>

@@ -1,5 +1,5 @@
 <?php
-require_once("./src/models/modele.class.php");
+require_once(__DIR__ . '/../models/modele.class.php');
 
 class Controller {
     private $unModele;
@@ -28,6 +28,15 @@ class Controller {
 
     public function deconnexion() {
         $this->unModele->deconnexion();
+    }
+
+    // ----------------------GESTION DES COURS--------------------------------
+    public function createCours($data) {
+        return $this->unModele->createCours($data);
+    }
+
+    public function getCoursByEnseignant($id_enseignant) {
+        return $this->unModele->getCoursByEnseignant($id_enseignant);
     }
 }
 ?>
