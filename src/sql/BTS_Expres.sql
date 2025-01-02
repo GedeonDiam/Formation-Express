@@ -10,6 +10,8 @@ CREATE TABLE etudiants (
     email VARCHAR(100) NOT NULL UNIQUE,
     role VARCHAR(100) NOT NULL,
     specialite VARCHAR(100) NOT NULL,
+    cours VARCHAR(250) NOT NULL,
+    temps VARCHAR(100) NOT NULL,
     mdp VARCHAR(255) NOT NULL
 );
 
@@ -26,12 +28,15 @@ CREATE TABLE enseignants (
 );
 
 -- Table des cours
+DROP TABLE IF EXISTS cours;
 CREATE TABLE cours (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    titre VARCHAR(255) NOT NULL,
+    titre VARCHAR(155) NOT NULL,
     description TEXT,
     id_enseignant INT,
     categorie VARCHAR(100),
+    image VARCHAR(105),  -- Nouveau champ pour stocker le chemin/nom de l'image
+    fichier VARCHAR(100),  -- Nouveau champ pour stocker le chemin/nom du fichier
     date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_enseignant) REFERENCES enseignants(id)
 );
@@ -39,8 +44,9 @@ CREATE TABLE cours (
 CREATE TABLE inscriptions_cours (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_etudiant INT,
-    id_cours INT,
+    id_cours INT, 
     date_inscription DATETIME DEFAULT CURRENT_TIMESTAMP,
+    temps_total INT DEFAULT 0,  -- Ajout du champ temps_total en secondes
     FOREIGN KEY (id_etudiant) REFERENCES etudiants(id),
     FOREIGN KEY (id_cours) REFERENCES cours(id)
 );

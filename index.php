@@ -1,7 +1,7 @@
 <?php
 
 // Démarre la session si ce n'est pas déjà fait
-    session_start();
+session_start();
 
 require_once("src/config/db.php");
 require_once("./src/controllers/controllers.class.php");
@@ -32,11 +32,10 @@ if (in_array($page, $protected_pages) && !isset($_SESSION['user'])) {
 
     <title>Document</title>
     <div>
-                <?php if ($page !== 'dashboard') {
+        <?php if ($page !== 'dashboard') {
 
-        include("./src/includes/header.php"); 
-        
-                }?>
+            include("./src/includes/header.php");
+        } ?>
     </div>
 
     <div>
@@ -66,6 +65,12 @@ if (in_array($page, $protected_pages) && !isset($_SESSION['user'])) {
             case 'inscription_prof':
                 include('./src/views/inscription_prof.php');
                 break;
+            case 'statistiques':
+                include('./src/views/statistiques.php');
+                break;
+            case 'quiz':
+                include('./src/views/quiz.php');
+                break;
             case 'gestion_inscription':
                 include('./src/controllers/gestion_inscription.php');
                 break;
@@ -73,7 +78,7 @@ if (in_array($page, $protected_pages) && !isset($_SESSION['user'])) {
                 include('./src/controllers/gestion_inscription_etudiants.php');
                 break;
             case 'dashboard':
-                if (isset($_SESSION['user'])) { 
+                if (isset($_SESSION['user'])) {
                     if ($_SESSION['user']['role'] == 'enseignant') {
                         include('./src/views/dashboard.php');
                     } else {
@@ -83,7 +88,9 @@ if (in_array($page, $protected_pages) && !isset($_SESSION['user'])) {
                     include('./src/views/connexion.php');
                 }
                 break;
-
+            case 'detail_cours':
+                include('./src/views/detail_cours.php');
+                break;
             case 'gestion_connexion':
                 include('./src/controllers/gestion_connexion.php');
                 break;
@@ -96,7 +103,8 @@ if (in_array($page, $protected_pages) && !isset($_SESSION['user'])) {
     <div>
 
         <?php if ($page !== 'dashboard') {
-include("./src/includes/footer.php"); }?>        
+            include("./src/includes/footer.php");
+        } ?>
     </div>
 </head>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

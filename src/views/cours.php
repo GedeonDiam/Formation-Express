@@ -26,93 +26,26 @@
 
     <div class="row">
 
-        <div class="col-3 d-flex">
-            <div class="card flex-fill card-hover" styl>
-                <img src="./src/asset/images/coder.jpg" class="card-img-top" alt="Coder">
-                <div class="card-body">
-                    <h5>Formation complète Dévéloppeur Web</h5>
-                    <p class="card-text">Mikael Houdoux, Apprendre à coder</p>
+    <?php 
+            $cours = $unController->getAllCours();
+            foreach($cours as $course): 
+            ?>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <a href="index.php?page=detail_cours&id=<?= $course['id'] ?>" class="text-decoration-none">
+                <div class="card h-100 shadow-sm hover-card">
+                    <img src="./src/asset/images/coder.jpg" class="card-img-top" alt="Coder">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark"><?= htmlspecialchars($course['titre']) ?></h5>
+                        <p class="card-text text-muted"><?= htmlspecialchars(substr($course['description'], 0, 100)) ?>...</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn btn-outline-primary btn-sm">Voir le cours</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
+        <?php endforeach; ?>
 
-
-        <div class="col-3 d-flex">
-            <div class="card flex-fill card-hover">
-                <img src="./src/asset/images/web-design.jpg" class="card-img-top" alt="Web Design">
-                <div class="card-body">
-                    <h5>Formation complète sur le Web-design</h5>
-                    <p class="card-text">John Taid, Apprendre le web-design.</p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-3 d-flex">
-            <div class="card flex-fill card-hover">
-                <img src="./src/asset/images/full-stack.jpg" class="card-img-top" alt="Full Stack">
-                <div class="card-body">
-                    <h5>Formation complète pour devenir full-stack</h5>
-                    <p class="card-text">Code with Nael, Apprendre le full-stack</p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-3 d-flex">
-            <div class="card flex-fill card-hover">
-                <img src="./src/asset/images/pratique.jpg" class="card-img-top" alt="Pratique">
-                <div class="card-body">
-                    <h5>Dévéloppemennt Web de A à Z par la pratique</h5>
-                    <p class="card-text">Boris Flesch, Apprendre à coder</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <br><br>
-
-    <div class="row">
-
-        <div class="col-3 d-flex">
-            <div class="card flex-fill card-hover">
-                <img src="./src/asset/images/java1.jpg" class="card-img-top" alt="Coder">
-                <div class="card-body">
-                    <h5>Devenez dévéloppeur Java</h5>
-                    <p class="card-text">Jean-Philippe EHRET</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-3 d-flex">
-            <div class="card flex-fill card-hover">
-                <img src="./src/asset/images/java2.jpg" class="card-img-top" alt="Java">
-                <div class="card-body">
-                    <h5>Java/Eclipse & Programmation Orientée-Objet</h5>
-                    <p class="card-text">Dr.M</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-3 d-flex">
-            <div class="card flex-fill card-hover">
-                <img src="./src/asset/images/java3.png" class="card-img-top" alt="Full Stack">
-                <div class="card-body">
-                    <h5>Java pour les débutants</h5>
-                    <p class="card-text">Ing.Seif Europe Innovation</p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-3 d-flex">
-            <div class="card flex-fill card-hover">
-                <img src="./src/asset/images/java4.png" class="card-img-top" alt="Base de données">
-                <div class="card-body">
-                    <h5>Java et les bases de données</h5>
-                    <p class="card-text">Boris Flesch, Apprendre à coder</p>
-                </div>
-            </div>
-        </div>
+       
     </div>
 </div><br><br>

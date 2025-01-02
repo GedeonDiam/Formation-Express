@@ -2,12 +2,20 @@
 class Modele {
     private $unPdo;
 
-    // La fonction qui permet de se connecter à la base de données
-    public function __construct($serveur, $bdd, $user, $mdp) {
+    public function __construct($serveur = "localhost", $bdd = "BTS_Express", $user = "root", $mdp = "") {
         try {
-            $this->unPdo = new PDO("mysql:host=$serveur;dbname=$bdd;charset=utf8", $user, $mdp);
-        } catch (PDOException $ex) {
-            echo "Erreur de connexion à la base de données";
+            $this->unPdo = new PDO(
+                "mysql:host=" . $serveur . ";dbname=" . $bdd . ";charset=utf8", 
+                $user, 
+                $mdp, 
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
+        } catch (PDOException $e) {
+            die("Erreur de connexion à la base de données : " . $e->getMessage());
+        }
+
+        if (!$this->unPdo) {
+            die("La connexion à la base de données a échoué");
         }
     }
 
@@ -89,18 +97,152 @@ class Modele {
         exit();
     }
 
+    // Créer un nouveau cours
     public function createCours($data) {
-        $sql = "INSERT INTO cours (titre, description, id_enseignant, categorie) 
-                VALUES (:titre, :description, :id_enseignant, :categorie)";
+        $sql = "INSERT INTO cours (titre, description, id_enseignant, categorie, image) 
+                VALUES (:titre, :description, :id_enseignant, :categorie, :image)";
         $stmt = $this->unPdo->prepare($sql);
-        return $stmt->execute($data);
+        return $stmt->execute([
+            ':titre' => $data['titre'],
+            ':description' => $data['description'],
+            ':id_enseignant' => $data['id_enseignant'],
+            ':categorie' => $data['categorie'],
+            ':image' => $data['image'] ?? null
+        ]);
     }
+
+    // Récupérer tous les cours
+    public function getAllCours() {
+        $sql = "SELECT c.*, e.nom as nom_enseignant 
+                FROM cours c 
+                LEFT JOIN enseignants e ON c.id_enseignant = e.id 
+                ORDER BY c.date_creation DESC";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Récupérer un cours par son ID
+    public function getCoursById($id) {
+        $sql = "SELECT c.*, e.nom as nom_enseignant, e.email as email_enseignant, 
+                e.domaine, e.diplome 
+                FROM cours c 
+                LEFT JOIN enseignants e ON c.id_enseignant = e.id 
+                WHERE c.id = :id";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Mettre à jour un cours
+    public function updateCours($id, $data) {
+        $sql = "UPDATE cours 
+                SET titre = :titre, 
+                    description = :description, 
+                    categorie = :categorie, 
+                    image = :image 
+                WHERE id = :id";
+        $stmt = $this->unPdo->prepare($sql);
+        return $stmt->execute([
+            ':id' => $id,
+            ':titre' => $data['titre'],
+            ':description' => $data['description'],
+            ':categorie' => $data['categorie'],
+            ':image' => $data['image'] ?? null
+        ]);
+    }
+
+    // Supprimer un cours
+    public function deleteCours($id) {
+        $sql = "DELETE FROM cours WHERE id = :id";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute([':id' => $id]);
     
+        // Réinitialiser l'auto-incrément
+        $sqlReset = "ALTER TABLE cours AUTO_INCREMENT = 1";
+        $this->unPdo->exec($sqlReset);
+    
+        return true;
+    }
+
     public function getCoursByEnseignant($id_enseignant) {
         $sql = "SELECT * FROM cours WHERE id_enseignant = :id_enseignant";
         $stmt = $this->unPdo->prepare($sql);
         $stmt->execute(['id_enseignant' => $id_enseignant]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function isInscritCours($id_etudiant, $id_cours) {
+        $requete = "SELECT * FROM inscriptions_cours WHERE id_etudiant = :id_etudiant AND id_cours = :id_cours";
+        $donnees = array(
+            ':id_etudiant' => $id_etudiant,
+            ':id_cours' => $id_cours
+        );
+        $select = $this->unPdo->prepare($requete);
+        $select->execute($donnees);
+        return $select->fetch() !== false;
+    }
+
+    public function inscrireCours($id_etudiant, $id_cours) {
+        $requete = "INSERT INTO inscriptions_cours (id_etudiant, id_cours) VALUES (:id_etudiant, :id_cours)";
+        $donnees = array(
+            ':id_etudiant' => $id_etudiant,
+            ':id_cours' => $id_cours
+        );
+        $insert = $this->unPdo->prepare($requete);
+        return $insert->execute($donnees);
+    }
+
+    public function desinscrireCours($id_etudiant, $id_cours) {
+        $requete = "DELETE FROM inscriptions_cours WHERE id_etudiant = :id_etudiant AND id_cours = :id_cours";
+        $donnees = array(
+            ':id_etudiant' => $id_etudiant,
+            ':id_cours' => $id_cours
+        );
+        $delete = $this->unPdo->prepare($requete);
+        return $delete->execute($donnees);
+    }
+
+    public function getCoursInscrits($id_etudiant) {
+        $sql = "SELECT c.*, ic.date_inscription, e.nom as nom_enseignant
+               FROM cours c 
+               INNER JOIN inscriptions_cours ic ON c.id = ic.id_cours 
+               LEFT JOIN enseignants e ON c.id_enseignant = e.id
+               WHERE ic.id_etudiant = :id_etudiant
+               ORDER BY ic.date_inscription DESC";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute([':id_etudiant' => $id_etudiant]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTotalTempsParCategorie($id_etudiant) {
+        $sql = "SELECT c.categorie, SUM(ic.temps_total) as temps_total
+               FROM cours c 
+               INNER JOIN inscriptions_cours ic ON c.id = ic.id_cours 
+               WHERE ic.id_etudiant = :id_etudiant 
+               GROUP BY c.categorie";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute([':id_etudiant' => $id_etudiant]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTotalTemps($id_etudiant) {
+        $sql = "SELECT SUM(temps_total) as total 
+               FROM inscriptions_cours 
+               WHERE id_etudiant = :id_etudiant";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute([':id_etudiant' => $id_etudiant]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    }
+
+    public function getCoursParCategorie($id_etudiant) {
+        $sql = "SELECT c.categorie, COUNT(*) as nombre
+               FROM cours c 
+               INNER JOIN inscriptions_cours ic ON c.id = ic.id_cours 
+               WHERE ic.id_etudiant = :id_etudiant 
+               GROUP BY c.categorie";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute([':id_etudiant' => $id_etudiant]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
-?>

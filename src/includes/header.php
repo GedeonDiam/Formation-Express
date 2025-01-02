@@ -6,6 +6,16 @@
     <a href="index.php?page=accueil">Accueil</a>
     <a href="index.php?page=cours">Cours</a>
     <a href="index.php?page=categorie">Catégories</a>
+
+    <?php if (isset($_SESSION['user'])) {
+      if ($_SESSION['user']['role'] == 'enseignant') {
+        echo '<a href="index.php?page=dashboard">Dashboard</a>';
+      }elseif ($_SESSION['user']['role'] == 'etudiant') {
+        echo '<a href="index.php?page=statistiques">Statistiques</a>';
+        echo '<a href="index.php?page=quiz">Quiz</a>';
+
+      }
+    } ?>
   </nav>
   <div class="">
 
