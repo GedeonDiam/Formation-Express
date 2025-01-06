@@ -21,13 +21,19 @@ if (!$cours) {
                 <div class="card-body">
                     <div class="mb-4">
                         <h5 class="text-muted mb-3">Description du cours</h5>
-                        <p class="lead"><?= htmlspecialchars($cours['description']) ?></p>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <p class="lead"><?= htmlspecialchars($cours['description']) ?></p>
+                            <a href="index.php?page=quiz&cours_id=<?= $_GET['id'] ?>" class="btn btn-warning ms-3">
+                                <i class="bi bi-question-circle me-2"></i>
+                                Quiz du cours
+                            </a>
+                        </div>
                     </div>
 
                     <?php if ($cours['fichier']): ?>
                     <div class="embed-responsive embed-responsive-16by9 mb-4"style="height: 100vh;">
                         <embed 
-                            src="./src/asset/files/<?= htmlspecialchars($cours['fichier']) ?>" 
+                            src="src/uploads/pdf/<?= htmlspecialchars($cours['fichier']) ?>" 
                             type="application/pdf"
                             class="embed-responsive-item shadow-sm"
                             style="width: 100%; height: 100vh;"

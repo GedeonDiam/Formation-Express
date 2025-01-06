@@ -12,58 +12,60 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
-    if ($action === 'create') {
+    if ($action === 'create' || $action === 'update') {
         $data = [
             'titre' => $_POST['titre'],
             'description' => $_POST['description'],
             'categorie' => $_POST['categorie'],
-            'image' => isset($_FILES['image']) && $_FILES['image']['error'] === 0 
-                ? $_FILES['image']['name'] 
-                : ''
+            'id_enseignant' => $_SESSION['user']['id'] ?? null,
+            'image' => null,
+            'fichier' => null
         ];
 
-        // Gérer le téléchargement de fichier
+        // Traitement de l'image
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-            $target_dir = __DIR__ . '/../uploads/';
-            if (!file_exists($target_dir)) {
-                mkdir($target_dir, 0777, true);
+            $allowed = ['image/jpeg', 'image/png', 'image/gif'];
+            if (in_array($_FILES['image']['type'], $allowed)) {
+                $image_name = uniqid() . '_' . $_FILES['image']['name'];
+                $target_dir = __DIR__ . '/../uploads/images/';
+                if (!file_exists($target_dir)) {
+                    mkdir($target_dir, 0777, true);
+                }
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $image_name)) {
+                    $data['image'] = $image_name;
+                }
             }
-            $target_file = $target_dir . basename($_FILES['image']['name']);
-            move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+        } elseif (isset($_POST['current_image'])) {
+            $data['image'] = $_POST['current_image'];
         }
 
-        if ($modele->createCours($data)) {
-            header("Location: /Formation-Express/index.php?page=dashboard&section=cours&status=success&action=create");
-        } else {
-            header("Location: /Formation-Express/index.php?page=dashboard&section=cours&status=error&action=create");
-        }
-        exit();
-    } elseif ($action === 'update') {
-        $id = intval($_POST['id']);
-        $data = [
-            'titre' => $_POST['titre'],
-            'description' => $_POST['description'],
-            'categorie' => $_POST['categorie'],
-            'image' => isset($_FILES['image']) && $_FILES['image']['error'] === 0 
-                ? $_FILES['image']['name'] 
-                : $_POST['current_image']
-        ];
-
-        // Gérer le téléchargement de fichier
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-            $target_dir = __DIR__ . '/../uploads/';
-            if (!file_exists($target_dir)) {
-                mkdir($target_dir, 0777, true);
+        // Traitement du fichier PDF
+        if (isset($_FILES['fichier']) && $_FILES['fichier']['error'] === 0) {
+            if ($_FILES['fichier']['type'] === 'application/pdf') {
+                $fichier_name = uniqid() . '_' . $_FILES['fichier']['name'];
+                $target_dir = __DIR__ . '/../uploads/pdf/';
+                if (!file_exists($target_dir)) {
+                    mkdir($target_dir, 0777, true);
+                }
+                if (move_uploaded_file($_FILES['fichier']['tmp_name'], $target_dir . $fichier_name)) {
+                    $data['fichier'] = $fichier_name;
+                }
             }
-            $target_file = $target_dir . basename($_FILES['image']['name']);
-            move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+        } elseif (isset($_POST['current_fichier'])) {
+            $data['fichier'] = $_POST['current_fichier'];
         }
 
-        if ($modele->updateCours($id, $data)) {
-            header("Location: /Formation-Express/index.php?page=dashboard&section=cours&status=success&action=update");
+        // Création ou mise à jour
+        if ($action === 'create') {
+            $success = $modele->createCours($data);
         } else {
-            header("Location: /Formation-Express/index.php?page=dashboard&section=cours&status=error&action=update");
+            $id = intval($_POST['id']);
+            $success = $modele->updateCours($id, $data);
         }
+
+        // Redirection
+        $status = $success ? 'success' : 'error';
+        header("Location: /Formation-Express/index.php?page=dashboard&menu=cours&status={$status}&action={$action}");
         exit();
     } elseif ($action === 'delete') {
         $id = intval($_POST['id']);
@@ -96,6 +98,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR);
+        }
+        exit();
+    }
+
+    if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+        $id = intval($_GET['id']);
+        if ($modele->deleteCours($id)) {
+            header("Location: /Formation-Express/index.php?page=dashboard&cours&status=success&action=delete");
+        } else {
+            header("Location: /Formation-Express/index.php?page=dashboard&cours&status=error&action=delete");
         }
         exit();
     }

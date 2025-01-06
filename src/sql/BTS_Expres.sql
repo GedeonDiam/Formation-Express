@@ -51,6 +51,7 @@ CREATE TABLE inscriptions_cours (
     FOREIGN KEY (id_cours) REFERENCES cours(id)
 );
 
+drop table quizz;
 -- Table des quiz
 CREATE TABLE quizz (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -58,7 +59,9 @@ CREATE TABLE quizz (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     created_by_teacher INT,
-    FOREIGN KEY (created_by_teacher) REFERENCES enseignants(id) ON DELETE CASCADE
+    cours_id INT,  -- Ajout du champ cours_id
+    FOREIGN KEY (created_by_teacher) REFERENCES enseignants(id) ON DELETE CASCADE,
+    FOREIGN KEY (cours_id) REFERENCES cours(id) ON DELETE CASCADE
 );
 
 -- Table des questions

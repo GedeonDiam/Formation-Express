@@ -33,7 +33,7 @@
         <div class="col-lg-4 col-md-6 mb-4">
             <a href="index.php?page=detail_cours&id=<?= $course['id'] ?>" class="text-decoration-none">
                 <div class="card h-100 shadow-sm hover-card">
-                    <img src="./src/asset/images/coder.jpg" class="card-img-top" alt="Coder">
+                    <img src="src/uploads/images/<?= htmlspecialchars($course['image']) ?>" class="card-img-top" alt="Coder">
                     <div class="card-body">
                         <h5 class="card-title text-dark"><?= htmlspecialchars($course['titre']) ?></h5>
                         <p class="card-text text-muted"><?= htmlspecialchars(substr($course['description'], 0, 100)) ?>...</p>

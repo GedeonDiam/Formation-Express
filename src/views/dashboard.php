@@ -1,6 +1,6 @@
 <?php
-// Récupère le dernier paramètre de l'URL (après le &)
-$section = array_key_last($_GET);
+// Récupère le paramètre 'menu' de l'URL
+$menu = isset($_GET['menu']) ? $_GET['menu'] : 'accueil';
 ?>
 
 <style>
@@ -54,18 +54,23 @@ $section = array_key_last($_GET);
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
-                <a href="index.php?page=dashboard&accueil" class="nav-link <?php echo ($section === 'accueil') ? 'active' : 'text-white'; ?>">
+                <a href="index.php?page=dashboard&menu=accueil" class="nav-link <?php echo ($menu === 'accueil') ? 'active' : 'text-white'; ?>">
                     Dashboard
                 </a>
             </li>
             <li>
-                <a href="index.php?page=dashboard&cours" class="nav-link <?php echo ($section === 'cours') ? 'active' : 'text-white'; ?>">
+                <a href="index.php?page=dashboard&menu=cours" class="nav-link <?php echo ($menu === 'cours') ? 'active' : 'text-white'; ?>">
                     Cours
                 </a>
             </li>
             <li>
-                <a href="index.php?page=dashboard&messages" class="nav-link <?php echo ($section === 'messages') ? 'active' : 'text-white'; ?>">
+                <a href="index.php?page=dashboard&menu=messages" class="nav-link <?php echo ($menu === 'messages') ? 'active' : 'text-white'; ?>">
                     Messages
+                </a>
+            </li>
+            <li>
+                <a href="index.php?page=dashboard&menu=quiz" class="nav-link <?php echo ($menu === 'quiz') ? 'active' : 'text-white'; ?>">
+                    Quiz
                 </a>
             </li>
         </ul>
@@ -94,9 +99,7 @@ $section = array_key_last($_GET);
     <!-- Contenu principal (fixé à droite) -->
     <div class="content">
         <?php
-
-
-        switch ($section) {
+        switch ($menu) {
             case 'cours':
                 include 'views_dashboard/cours.php';
                 break;
@@ -105,6 +108,9 @@ $section = array_key_last($_GET);
                 break;
             case 'messages':
                 include 'views_dashboard/messages.php';
+                break;
+            case 'quiz':
+                include 'views_dashboard/quiz.php';
                 break;
             default:
                 include 'views_dashboard/accueil.php';

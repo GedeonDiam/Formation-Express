@@ -76,5 +76,80 @@ class Controller {
     public function getCoursParCategorie($id_etudiant) {
         return $this->unModele->getCoursParCategorie($id_etudiant);
     }
+
+    public function getQuizzesByCours($cours_id) {
+        return $this->unModele->getQuizzesByCours($cours_id);
+    }
+
+    public function getQuizWithQuestions($quiz_id) {
+        return $this->unModele->getQuizWithQuestions($quiz_id);
+    }
+
+    public function getQuestionsByQuiz($quiz_id) {
+        return $this->unModele->getQuestionsByQuiz($quiz_id);
+    }
+
+    public function saveQuizResult($quiz_id, $student_id, $score) {
+        return $this->unModele->saveQuizResult($quiz_id, $student_id, $score);
+    }
+
+    public function getQuizResults($student_id, $quiz_id = null) {
+        return $this->unModele->getQuizResults($student_id, $quiz_id);
+    }
+
+    // Nouvelles méthodes pour les statistiques
+    public function getTotalStudentsByTeacher($id_enseignant) {
+        return $this->unModele->getTotalStudentsByTeacher($id_enseignant);
+    }
+
+    public function getTotalQuizzesByTeacher($id_enseignant) {
+        return $this->unModele->getTotalQuizzesByTeacher($id_enseignant);
+    }
+
+    public function getRecentActivities($id_enseignant) {
+        return $this->unModele->getRecentActivities($id_enseignant);
+    }
+
+    public function getCourseStatsByCategory($id_enseignant) {
+        return $this->unModele->getCourseStatsByCategory($id_enseignant);
+    }
+
+    public function deleteCours($id) {
+        // Vérifier que le cours existe
+        $cours = $this->getCoursById($id);
+        if (!$cours) {
+            return false;
+        }
+
+        // Si le cours existe, supprimer les fichiers associés
+        if (!empty($cours['image'])) {
+            $image_path = __DIR__ . '/../uploads/images/' . $cours['image'];
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
+        }
+
+        if (!empty($cours['fichier'])) {
+            $fichier_path = __DIR__ . '/../uploads/pdf/' . $cours['fichier'];
+            if (file_exists($fichier_path)) {
+                unlink($fichier_path);
+            }
+        }
+
+        // Supprimer le cours de la base de données
+        return $this->unModele->deleteCours($id);
+    }
+
+    public function createQuiz($data) {
+        return $this->unModele->createQuiz($data);
+    }
+
+    public function updateQuiz($id, $data) {
+        return $this->unModele->updateQuiz($id, $data);
+    }
+
+    public function deleteQuiz($id) {
+        return $this->unModele->deleteQuiz($id);
+    }
 }
 ?>
