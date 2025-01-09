@@ -113,3 +113,15 @@ CREATE TABLE forum_replies (
     FOREIGN KEY (created_by_student) REFERENCES etudiants(id) ON DELETE CASCADE,
     FOREIGN KEY (forum_id) REFERENCES forum(id) ON DELETE CASCADE
 );
+
+-- Table des messages
+CREATE TABLE messages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    contenu TEXT NOT NULL,
+    id_expediteur INT,
+    id_destinataire INT,
+    date_envoi TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lu BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_expediteur) REFERENCES etudiants(id),
+    FOREIGN KEY (id_destinataire) REFERENCES etudiants(id)
+);

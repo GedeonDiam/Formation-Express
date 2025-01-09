@@ -12,7 +12,6 @@
         echo '<a href="index.php?page=dashboard">Dashboard</a>';
       }elseif ($_SESSION['user']['role'] == 'etudiant') {
         echo '<a href="index.php?page=statistiques">Statistiques</a>';
-        echo '<a href="index.php?page=quiz">Quiz</a>';
 
       }
     } ?>
