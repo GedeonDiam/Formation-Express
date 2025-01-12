@@ -106,37 +106,52 @@ if (isset($_GET['quiz_id'])) {
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="src/controllers/quiz_controller.php" method="POST">
+                        <?php if (!isset($_SESSION['user'])): ?>
                             <div class="modal-body">
-                                <?php 
-                                $questions = $unController->getQuestionsByQuiz($quiz['id']);
-                                foreach ($questions as $index => $question): 
-                                ?>
-                                    <div class="question mb-4">
-                                        <h5>Question <?= $index + 1 ?>: <?= htmlspecialchars($question['content']) ?></h5>
-                                        <div class="answers mt-3">
-                                            <?php foreach ($question['answers'] as $answer): ?>
-                                                <div class="form-check mb-2">
-                                                    <input class="form-check-input" type="radio" 
-                                                           name="question_<?= $question['id'] ?>" 
-                                                           value="<?= $answer['id'] ?>" 
-                                                           id="answer_<?= $answer['id'] ?>">
-                                                    <label class="form-check-label" for="answer_<?= $answer['id'] ?>">
-                                                        <?= htmlspecialchars($answer['content']) ?>
-                                                    </label>
-                                                </div>
-                                            <?php endforeach; ?>
+                                <div class="alert alert-warning">
+                                    Veuillez vous <a href="index.php?page=connexion">connecter</a> pour participer au quiz.
+                                </div>
+                            </div>
+                        <?php elseif ($_SESSION['user']['role'] !== 'etudiant'): ?>
+                            <div class="modal-body">
+                                <div class="alert alert-warning">
+                                    Seuls les étudiants peuvent participer aux quiz.
+                                </div>
+                            </div>
+                        <?php else: ?>
+                            <form action="src/controllers/quiz_controller.php" method="POST">
+                                <div class="modal-body">
+                                    <?php 
+                                    $questions = $unController->getQuestionsByQuiz($quiz['id']);
+                                    foreach ($questions as $index => $question): 
+                                    ?>
+                                        <div class="question mb-4">
+                                            <h5>Question <?= $index + 1 ?>: <?= htmlspecialchars($question['content']) ?></h5>
+                                            <div class="answers mt-3">
+                                                <?php foreach ($question['answers'] as $answer): ?>
+                                                    <div class="form-check mb-2">
+                                                        <input class="form-check-input" type="radio" 
+                                                               name="question_<?= $question['id'] ?>" 
+                                                               value="<?= $answer['id'] ?>" 
+                                                               id="answer_<?= $answer['id'] ?>">
+                                                        <label class="form-check-label" for="answer_<?= $answer['id'] ?>">
+                                                            <?= htmlspecialchars($answer['content']) ?>
+                                                        </label>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
                                         </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="hidden" name="quiz_id" value="<?= $quiz['id'] ?>">
-                                <input type="hidden" name="cours_id" value="<?= $cours_id ?>">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary">Valider mes réponses</button>
-                            </div>
-                        </form>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="hidden" name="quiz_id" value="<?= $quiz['id'] ?>">
+                                    <input type="hidden" name="cours_id" value="<?= $cours_id ?>">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary" name="action" value="valided_quiz">
+                                        Valider le quiz</button>
+                                </div>
+                            </form>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

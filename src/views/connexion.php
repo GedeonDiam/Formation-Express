@@ -9,7 +9,7 @@ if(session_status() == PHP_SESSION_NONE){
         <div class="row">
 
             <div class="col-6" style="padding-top:70px">
-                <img src="./src/asset/images/connexion.png" class="" width="600" alt="Connexion">
+                <img src="./src/asset/images/connexion.png" class="" width="100%" alt="Connexion">
             </div>
 
             <div class="col-6 mt-5">
@@ -21,12 +21,22 @@ if(session_status() == PHP_SESSION_NONE){
                     </div>
                     <hr>
 
-                    <!-- Affichage des messages de session -->
-                    <?php if(isset($_SESSION['message'])): ?>
+                    <!-- Affichage des messages d'erreur -->
+                    <?php if(isset($_SESSION['error'])): ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php 
+                                echo $_SESSION['error'];
+                                unset($_SESSION['error']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Affichage des messages de succès -->
+                    <?php if(isset($_SESSION['success'])): ?>
                         <div class="alert alert-success" role="alert">
                             <?php 
-                                echo $_SESSION['message'];
-                                unset($_SESSION['message']);
+                                echo $_SESSION['success'];
+                                unset($_SESSION['success']);
                             ?>
                         </div>
                     <?php endif; ?>
@@ -47,17 +57,12 @@ if(session_status() == PHP_SESSION_NONE){
                             </div>
                         </div>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                               <strong>Se souvenir de moi</strong>
-                            </label>
-                        </div>
+                      
 
                         <button type="submit" class="btn mt-3" style="width:100%; background-color:#732BF5 !important; color: white; font-weight: bold;">Connexion</button>
                         
                     </form>
-                    <p><a href="#">Mot de passe oublié?</a></p>
+                  
                 </div>
 
             </div>

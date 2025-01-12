@@ -19,6 +19,14 @@ class Controller {
         return $this->unModele->getEnseignantByEmail($email);
     }
 
+    public function getEnseignantById($id) {
+        return $this->unModele->getEnseignantById($id);
+    }
+
+    public function updateEnseignantProfile($id, $data) {
+        return $this->unModele->updateEnseignantProfile($id, $data);
+    }
+
     // ----------------------INSCRIPTION ETUDIANTS--------------------------------
     public function inscriptionEtudiants($tab) {
         $this->unModele->inscriptionEtudiants($tab);
@@ -27,6 +35,14 @@ class Controller {
     public function getEtudiantsByEmail($email) {
         return $this->unModele->getEtudiantsByEmail($email);
     } 
+
+    public function getEtudiantById($id) {
+        return $this->unModele->getEtudiantById($id);
+    }
+
+    public function updateEtudiantProfile($id, $data) {
+        return $this->unModele->updateEtudiantProfile($id, $data);
+    }
 
     public function deconnexion() {
         $this->unModele->deconnexion();
@@ -150,6 +166,14 @@ class Controller {
 
     public function deleteQuiz($id) {
         return $this->unModele->deleteQuiz($id);
+    }
+
+    public function updatePassword($id, $newPassword, $role = 'etudiant') {
+        return $this->unModele->updatePassword($id, $newPassword, $role);
+    }
+
+    public function getUniqueCategories() {
+        return $this->unModele->getUniqueCategories();
     }
 }
 ?>

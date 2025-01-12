@@ -502,4 +502,76 @@ class Modele {
             throw $e;
         }
     }
+
+    public function updateEtudiantProfile($id, $data) {
+        $sql = "UPDATE etudiants 
+                SET nom = :nom,
+                    telephone = :telephone,
+                    email = :email,
+                    specialite = :specialite
+                WHERE id = :id";
+        
+        $stmt = $this->unPdo->prepare($sql);
+        return $stmt->execute([
+            ':id' => $id,
+            ':nom' => $data['nom'],
+            ':telephone' => $data['telephone'],
+            ':email' => $data['email'],
+            ':specialite' => $data['specialite']
+        ]);
+    }
+
+    public function updatePassword($id, $newPassword, $role = 'etudiant') {
+        $table = $role == 'etudiant' ? 'etudiants' : 'enseignants';
+        $sql = "UPDATE {$table} SET mdp = :mdp WHERE id = :id";
+        
+        $stmt = $this->unPdo->prepare($sql);
+        return $stmt->execute([
+            ':id' => $id,
+            ':mdp' => password_hash($newPassword, PASSWORD_DEFAULT)
+        ]);
+    }
+
+    public function getEtudiantById($id) {
+        $sql = "SELECT * FROM etudiants WHERE id = :id";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getUniqueCategories() {
+        $sql = "SELECT DISTINCT categorie, COUNT(*) as count 
+                FROM cours 
+                GROUP BY categorie";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getEnseignantById($id) {
+        $sql = "SELECT * FROM enseignants WHERE id = :id";
+        $stmt = $this->unPdo->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateEnseignantProfile($id, $data) {
+        $sql = "UPDATE enseignants 
+                SET nom = :nom,
+                    telephone = :telephone,
+                    email = :email,
+                    diplome = :diplome,
+                    domaine = :domaine
+                WHERE id = :id";
+        
+        $stmt = $this->unPdo->prepare($sql);
+        return $stmt->execute([
+            ':id' => $id,
+            ':nom' => $data['nom'],
+            ':telephone' => $data['telephone'],
+            ':email' => $data['email'],
+            ':diplome' => $data['diplome'],
+            ':domaine' => $data['domaine']
+        ]);
+    }
 }

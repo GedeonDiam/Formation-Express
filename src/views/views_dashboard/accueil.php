@@ -201,30 +201,8 @@ if (isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <!-- Actions rapides -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Actions rapides</h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 mb-3">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addCourseModal">
-                                <i class="fas fa-plus-circle"></i> Créer un nouveau cours
-                            </button>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mb-3">
-                            <a href="index.php?page=dashboard&messages" class="btn btn-info w-100">
-                                <i class="fas fa-envelope"></i> Voir les messages
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  
+   
 </div>
 
 <!-- Scripts pour les graphiques -->

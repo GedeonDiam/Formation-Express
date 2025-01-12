@@ -62,12 +62,7 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'accueil';
                 <a href="index.php?page=dashboard&menu=cours" class="nav-link <?php echo ($menu === 'cours') ? 'active' : 'text-white'; ?>">
                     Cours
                 </a>
-            </li>
-            <li>
-                <a href="index.php?page=dashboard&menu=messages" class="nav-link <?php echo ($menu === 'messages') ? 'active' : 'text-white'; ?>">
-                    Messages
-                </a>
-            </li>
+          
             <li>
                 <a href="index.php?page=dashboard&menu=quiz" class="nav-link <?php echo ($menu === 'quiz') ? 'active' : 'text-white'; ?>">
                     Quiz
@@ -85,7 +80,7 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'accueil';
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
             <li><a class="dropdown-item" href="#">Paramètres</a></li>
-            <li><a class="dropdown-item" href="#">Profil</a></li>
+            <li><a class="dropdown-item" href="index.php?page=dashboard&menu=profil">Profil</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="index.php?page=deconnexion">Déconnexion</a></li>
         </ul>
@@ -111,6 +106,9 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'accueil';
                 break;
             case 'quiz':
                 include 'views_dashboard/quiz.php';
+                break;
+            case 'profil':
+                include 'views_dashboard/profil.php';
                 break;
             default:
                 include 'views_dashboard/accueil.php';

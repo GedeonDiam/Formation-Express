@@ -9,6 +9,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = htmlspecialchars($_POST['email'] ?? '');
     $mdp = htmlspecialchars($_POST['mdp'] ?? '');
 
+    if (empty($email) || empty($mdp)) {
+        $_SESSION['error'] = "Veuillez remplir tous les champs";
+        header('Location: index.php?page=connexion');
+        exit();
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['error'] = "Format d'email invalide";
+        header('Location: index.php?page=connexion');
+        exit();
+    }
+
     try {
         $enseignant = $controller->getEnseignantByEmail($email);
         $etudiant = $controller->getEtudiantsByEmail($email);
@@ -16,24 +28,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($enseignant && password_verify($mdp, $enseignant['mdp'])) {
             $_SESSION['user'] = $enseignant;
             $_SESSION['role'] = 'enseignant';
-            $_SESSION['message'] = 'Bienvenue ' . $enseignant['nom'] . '!';
-            
+            $_SESSION['success'] = 'Bienvenue ' . $enseignant['nom'] . '!';
             header('Location: index.php?page=accueil');
             exit();
         } elseif ($etudiant && password_verify($mdp, $etudiant['mdp'])) {
             $_SESSION['user'] = $etudiant;
             $_SESSION['role'] = 'etudiant';
-            $_SESSION['message'] = 'Bienvenue ' . $etudiant['nom'] . '!';
+            $_SESSION['success'] = 'Bienvenue ' . $etudiant['nom'] . '!';
             header('Location: index.php?page=accueil');
-
             exit();
         } else {
-            $_SESSION['message'] = $verif;
+            if (!$enseignant && !$etudiant) {
+                $_SESSION['error'] = "Aucun compte trouvé avec cet email";
+            } else {
+                $_SESSION['error'] = "Mot de passe incorrect";
+            }
             header('Location: index.php?page=connexion');
             exit();
         }
     } catch (Exception $e) {
-        $_SESSION['message'] = 'Erreur : ' . $e->getMessage();
+        $_SESSION['error'] = 'Une erreur est survenue : ' . $e->getMessage();
         header('Location: index.php?page=connexion');
         exit();
     }

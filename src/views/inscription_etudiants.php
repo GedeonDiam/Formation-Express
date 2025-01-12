@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="col-7" style="padding-top:100px">
-                <img src="./src/asset/images/inscription.png" width="700" alt="Inscription">
+                <img src="./src/asset/images/inscription.png" width="100%" alt="Inscription">
             </div>
         </div>
     </div> 

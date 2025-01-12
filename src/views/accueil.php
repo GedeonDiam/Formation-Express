@@ -41,7 +41,7 @@ if(session_status() == PHP_SESSION_NONE){
         </div>
 
         <div class="col-6 ">
-            <img src="./src/asset/images/accueil.png" alt="">
+            <img src="./src/asset/images/accueil.png" width="100%" alt="">
         </div>
     </div> <br><br>
 
