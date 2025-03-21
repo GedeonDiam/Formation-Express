@@ -211,15 +211,11 @@ if (isset($_SESSION['user'])) {
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-4 col-md-6 mb-3">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addCourseModal">
-                                <i class="fas fa-plus-circle"></i> Créer un nouveau cours
-                            </button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+                                  Ajouter un nouveau cours
+                        </button>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-3">
-                            <a href="index.php?page=dashboard&messages" class="btn btn-info w-100">
-                                <i class="fas fa-envelope"></i> Voir les messages
-                            </a>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

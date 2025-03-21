@@ -502,4 +502,20 @@ class Modele {
             throw $e;
         }
     }
+
+    // Méthode pour récupérer le profil complet d'un enseignant
+    public function getProfilEnseignant($id) {
+        $requete = "SELECT * FROM enseignants WHERE id = :id";
+        $stmt = $this->unPdo->prepare($requete);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Méthode pour récupérer le profil complet d'un étudiant
+    public function getProfilEtudiant($id) {
+        $requete = "SELECT * FROM etudiants WHERE id = :id";
+        $stmt = $this->unPdo->prepare($requete);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

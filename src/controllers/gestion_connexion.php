@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__ . '/../config/db.php');
-require_once(__DIR__ . '/../models/modele.class.php');
-require_once(__DIR__ . '/../controllers/controllers.class.php');
+require_once('./src/models/modele.class.php');
+require_once('./src/config/db.php');
+require_once('./src/controllers/controllers.class.php');
 
 $controller = new Controller($serveur, $bdd, $user, $mdp);
 
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
         if ($enseignant && password_verify($mdp, $enseignant['mdp'])) {
             $_SESSION['user'] = $enseignant;
-            $_SESSION['role'] = 'enseignant';
+            $_SESSION['role'] = 'enseignant'; 
             $_SESSION['message'] = 'Bienvenue ' . $enseignant['nom'] . '!';
             
             header('Location: index.php?page=accueil');

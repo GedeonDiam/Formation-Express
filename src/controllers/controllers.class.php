@@ -151,5 +151,15 @@ class Controller {
     public function deleteQuiz($id) {
         return $this->unModele->deleteQuiz($id);
     }
+
+    // Récupérer le profil d'un enseignant
+    public function getProfilEnseignant($id) {
+        return $this->unModele->getProfilEnseignant($id);
+    }
+
+    // Récupérer le profil d'un étudiant
+    public function getProfilEtudiant($id) {
+        return $this->unModele->getProfilEtudiant($id);
+    }
 }
 ?>

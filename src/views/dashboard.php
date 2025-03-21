@@ -48,7 +48,7 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'accueil';
 
     <!-- Barre latérale (fixée à gauche) -->
     <div class="sidebar d-flex flex-column p-3">
-        <a href="/" class="d-flex align-items-center mb-3 text-white text-decoration-none">
+        <a href="#" class="d-flex align-items-center mb-3 text-white text-decoration-none">
             <span class="fs-4">Menu</span>
         </a>
         <hr>
@@ -63,11 +63,7 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'accueil';
                     Cours
                 </a>
             </li>
-            <li>
-                <a href="index.php?page=dashboard&menu=messages" class="nav-link <?php echo ($menu === 'messages') ? 'active' : 'text-white'; ?>">
-                    Messages
-                </a>
-            </li>
+           
             <li>
                 <a href="index.php?page=dashboard&menu=quiz" class="nav-link <?php echo ($menu === 'quiz') ? 'active' : 'text-white'; ?>">
                     Quiz
@@ -84,8 +80,8 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'accueil';
             <strong>'.$_SESSION['user']['nom'].'</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="#">Paramètres</a></li>
-            <li><a class="dropdown-item" href="#">Profil</a></li>
+          
+            <li><a class="dropdown-item" href="./src/views/profil.php">Profil</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="index.php?page=deconnexion">Déconnexion</a></li>
         </ul>

@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $erreurs = [];
 
     // Validation des champs
-    if (empty($nom)) $erreurs[] = "Le nom est requis.";
-    if (empty($telephone)) $erreurs[] = "Le téléphone est requis.";
-    if (empty($email)) $erreurs[] = "L'email est requis.";
-    if (empty($diplome)) $erreurs[] = "Le diplôme ou la qualification est requis.";
+        if (empty($nom)) $erreurs[] = "Le nom est requis.";
+        if (empty($telephone)) $erreurs[] = "Le téléphone est requis.";
+        if (empty($email)) $erreurs[] = "L'email est requis.";
+        if (empty($diplome)) $erreurs[] = "Le diplôme ou la qualification est requis.";
     if (empty($domaine)) $erreurs[] = "Le domaine d'expertise est requis.";
     if (empty($mdp)) $erreurs[] = "Le mot de passe est requis.";
 
@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'mdp' => $mdp
             ];
 
+            
             // Tente d'inscrire l'utilisateur via le contrôleur
             $controller->inscriptionEnseignants($tab);
             
