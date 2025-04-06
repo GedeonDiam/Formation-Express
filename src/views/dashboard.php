@@ -47,7 +47,7 @@ $menu = isset($_GET['menu']) ? $_GET['menu'] : 'accueil';
 <body>
 
     <!-- Barre latérale (fixée à gauche) -->
-    <div class="sidebar d-flex flex-column p-3">
+    <div class="sidebar d-flex flex-column p-4">
         <a href="#" class="d-flex align-items-center mb-3 text-white text-decoration-none">
             <span class="fs-4">Menu</span>
         </a>
